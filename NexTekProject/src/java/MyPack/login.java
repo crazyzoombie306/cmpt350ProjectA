@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package MyPack;
 
 import java.io.IOException;
@@ -40,42 +39,44 @@ public class login extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-          String name = request.getParameter("uname");
-          
-           String bhu = request.getParameter("bhu");
-           
-           String pass = request.getParameter("pass");
-           
-           MyDb db = new MyDb();
-           Connection con =db.getCon();
-           Statement stmt = con.createStatement();
-           out.println("hiii");
-          if(bhu.equals("user")) 
-          {
-           ResultSet rs = stmt.executeQuery("select uid,email,pass from uregister where email = '"+name+"' and pass = '"+pass+"'"); 
-           rs.next();
-           String n = rs.getString("uid");
-           HttpSession session=request.getSession();  
-           session.setAttribute("uname",n);
-          String redirectedPage = "/parentPage";
-          response.sendRedirect("welcome.jsp");
-          }
-        
-           if(bhu.equals("b")){
-           ResultSet rs1 = stmt.executeQuery("select bid,email,password from bregister where email = '"+name+"' and password = '"+pass+"'"); 
-           rs1.next();
-            
-          response.sendRedirect("welcome.jsp");
-        }
-       
-             if(bhu.equals("h")){
-           ResultSet rs2 = stmt.executeQuery("select hid,email,pass from hregister where email = '"+name+"' and pass = '"+pass+"'"); 
-           rs2.next();
-            
-          response.sendRedirect("welcome.jsp");
-        } 
-            
-           
+            String userId = request.getParameter("userId");
+
+            String userType = request.getParameter("userType");
+
+            String pass = request.getParameter("pass");
+
+            MyDb db = new MyDb();
+            Connection con = db.getCon();
+            Statement stmt = con.createStatement();
+            out.println("Invalid Password");
+            if (userType.equals("admin")) {
+                System.out.println("Looking For Admin User");
+                ResultSet rs = stmt.executeQuery("select userId,userName,userType,userPass from adminuser where userId = '" + userId + "' and userPass = '" + pass + "' and userType = '" + userType + "'");
+                
+                rs.next();
+                String n = rs.getString("userId");
+                HttpSession session = request.getSession();
+                session.setAttribute("uname", n);
+                String redirectedPage = "/parentPage";
+                response.sendRedirect("welcome.jsp");
+            }
+
+            if (userType.equals("professor")) {
+                ResultSet rs1 = stmt.executeQuery("select Professor_fName,Professor_email,Professor_PWD from professor where Professor_email = '" + userId + "' and Professor_PWD = '" + pass + "' and userType = '" + userType + "'");
+                rs1.next();
+
+                response.sendRedirect("welcome.jsp");
+            }
+
+            if (userType.equals("reviewer")) {
+                ResultSet rs2 = stmt.executeQuery("select Professor_fName,Professor_email,Professor_PWD from professor where Professor_email = '" + userId + "' and Professor_PWD = '" + pass + "' and userType = '" + userType + "'");
+                rs2.next();
+
+                response.sendRedirect("welcome.jsp");
+            }
+
+
+
         } catch (SQLException ex) {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
         }

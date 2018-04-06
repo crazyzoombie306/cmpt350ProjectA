@@ -18,10 +18,14 @@ import java.util.logging.Logger;
  */
 public class MyDb {
     Connection con;
+    String url ="jdbc:mysql://questionbank350mysqlserver.mysql.database.azure.com:3306/questionbankdb?useSSL=true&requireSSL=false"; 
+    String user = "priomkhan@questionbank350mysqlserver";
+    String password = "mdk705@usask.ca";
     public Connection getCon(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bldbank","root","123456");
+            //con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bldbank","root","123456");
+            con = DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MyDb.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex);
