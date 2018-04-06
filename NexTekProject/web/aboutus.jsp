@@ -31,7 +31,7 @@
             </div>
                 <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
-            <li><a href="index.html">LogOut</a></li>
+            <li><a href="login.html">LogOut</a></li>
             <li><a href="rselectp.html">Page 2</a></li>
             <li><a href="bloodbank.html">Page 3</a></li>
             <li><a href="viewhospital.jsp">Page 3</a></li>

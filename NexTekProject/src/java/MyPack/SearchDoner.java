@@ -39,10 +39,10 @@ public class SearchDoner extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String loc = request.getParameter("loc");
-            String bld = request.getParameter("bld");
+           String loc = request.getParameter("loc");
+           String bld = request.getParameter("bld");
             
-             MyDb db = new MyDb();
+           MyDb db = new MyDb();
            Connection con =db.getCon();
            Statement stmt = con.createStatement();
            out.println("hiii");

@@ -49,31 +49,39 @@ public class login extends HttpServlet {
             Connection con = db.getCon();
             Statement stmt = con.createStatement();
             out.println("Invalid Password");
-            if (userType.equals("admin")) {
+            if (userType.equals("Admin")) {
                 System.out.println("Looking For Admin User");
-                ResultSet rs = stmt.executeQuery("select userId,userName,userType,userPass from adminuser where userId = '" + userId + "' and userPass = '" + pass + "' and userType = '" + userType + "'");
+                ResultSet rs = stmt.executeQuery("select userId,userName,userType,userPass from adminuser where userId = '" + userId + "' and userPass = '" + pass + "'");
                 
                 rs.next();
-                String n = rs.getString("userId");
+                String n1 = rs.getString("userId");
+                String n2 = rs.getString("userType");
                 HttpSession session = request.getSession();
-                session.setAttribute("uname", n);
+                session.setAttribute("userId", n1);
+                session.setAttribute("userType", n2);
                 String redirectedPage = "/parentPage";
-                response.sendRedirect("welcome.jsp");
+                response.sendRedirect("admin.jsp");
             }
 
-            if (userType.equals("professor")) {
-                ResultSet rs1 = stmt.executeQuery("select Professor_fName,Professor_email,Professor_PWD from professor where Professor_email = '" + userId + "' and Professor_PWD = '" + pass + "' and userType = '" + userType + "'");
+            if (userType.equals("Professor")) {
+                System.out.println("Looking For Professor");
+
+                ResultSet rs1 = stmt.executeQuery("select Id, Professor_fName,Professor_email,Professor_PWD,userType from professor where Professor_email = '" + userId + "' and Professor_PWD = '" + pass + "'");
                 rs1.next();
-
-                response.sendRedirect("welcome.jsp");
+                String n3 = rs1.getString("Id");
+                String n4 = rs1.getString("userType");
+                HttpSession session = request.getSession();
+                session.setAttribute("userId", n3);
+                session.setAttribute("userType", n4);
+                response.sendRedirect("professor.jsp");
             }
-
-            if (userType.equals("reviewer")) {
-                ResultSet rs2 = stmt.executeQuery("select Professor_fName,Professor_email,Professor_PWD from professor where Professor_email = '" + userId + "' and Professor_PWD = '" + pass + "' and userType = '" + userType + "'");
-                rs2.next();
-
-                response.sendRedirect("welcome.jsp");
-            }
+//
+//            if (userType.equals("reviewer")) {
+//                ResultSet rs2 = stmt.executeQuery("select Professor_fName,Professor_email,Professor_PWD from professor where Professor_email = '" + userId + "' and Professor_PWD = '" + pass + "' and userType = '" + userType + "'");
+//                rs2.next();
+//
+//                response.sendRedirect("welcome.jsp");
+//            }
 
 
 
