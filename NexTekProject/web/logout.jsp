@@ -13,14 +13,14 @@
     </head>
     <body>
         <%
-            String n =(String)session.getAttribute("uname");
+            String n =(String)session.getAttribute("userId");
             session.invalidate();
             %>
             <script> window.alert("LOGOUT SUCCESSFULLY");</script>
        
         <%
           String redirectedPage = "/parentPage";
-          response.sendRedirect("MainPage.html");
+          response.sendRedirect("index.html");
         
         
         %>
